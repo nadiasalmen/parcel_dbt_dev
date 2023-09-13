@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: staging_cc_parcel
+    columns:
+      ### PK ###
+      - name: parcel_id
+        tests:
+          - unique
+          - not_null
+
+  - name: staging_cc_parcel_products
+    columns:
+      ### PK ###
+      - name: "(parcel_id || '-' || model_name)"
+        tests:
+          - unique
+          - not_null
