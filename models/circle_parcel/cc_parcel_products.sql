@@ -2,7 +2,7 @@ WITH nb_products_parcel AS (
 	SELECT
 		parcel_id
     ,COUNT(DISTINCT(model_name)) AS nb_models
-		,SUM(qty) AS qty
+		,SUM(qty) AS quantity
     FROM {{ ref ('staging_cc_parcel_products') }}
 	GROUP BY parcel_id
 )
@@ -37,7 +37,7 @@ SELECT
   -- delay
   ,IF(date_delivery IS NULL,NULL,IF(DATE_DIFF(date_delivery,date_purchase,DAY)>5,1,0)) AS delay
 	-- Metrics --
-	,qty
+	,quantity
   , nb_models
-FROM {{ ref ('staging_cc_parcel') }}
+FROM {{ ref ('cc_parcel') }}
 LEFT JOIN nb_products_parcel USING (parcel_id)
